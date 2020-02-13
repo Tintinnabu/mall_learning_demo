@@ -1,7 +1,7 @@
 package com.taoshi.springboot_mybatis.mbg.mapper;
 
-import com.taoshi.springboot_mybatis.mbg.model2.PmsBrand;
-import com.taoshi.springboot_mybatis.mbg.model2.PmsBrandExample;
+import com.taoshi.springboot_mybatis.mbg.model.PmsBrand;
+import com.taoshi.springboot_mybatis.mbg.model.PmsBrandExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
