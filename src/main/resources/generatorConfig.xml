@@ -9,6 +9,8 @@
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
         <property name="javaFileEncoding" value="UTF-8"/>
+        <!--生成mapper.xml时覆盖原文件-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
         <!-- 为模型生成序列化方法-->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <!-- 为生成的Java模型创建一个toString方法 -->
@@ -29,12 +31,12 @@
             <property name="nullCatalogMeansCurrent" value="true" />
         </jdbcConnection>
         <!--指定生成model的路径-->
-        <javaModelGenerator targetPackage="com.taoshi.springboot_mybatis.mbg.model" targetProject="C:\Users\lenovo\Desktop\mall-learning-demo\springboot_mybatis\src\main\java"/>
+        <javaModelGenerator targetPackage="com.taoshi.springboot_mybatis.mbg.model" targetProject="C:\Users\lenovo\Desktop\mall-learning-demo\springboot_mybatis_02\src\main\java"/>
         <!--指定生成mapper.xml的路径-->
-        <sqlMapGenerator targetPackage="com.taoshi.springboot_mybatis.mbg.mapper" targetProject="C:\Users\lenovo\Desktop\mall-learning-demo\springboot_mybatis\src\main\resources"/>
+        <sqlMapGenerator targetPackage="com.taoshi.springboot_mybatis.mbg.mapper" targetProject="C:\Users\lenovo\Desktop\mall-learning-demo\springboot_mybatis_02\src\main\resources"/>
         <!--指定生成mapper接口的的路径-->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.taoshi.springboot_mybatis.mbg.mapper"
-                             targetProject="C:\Users\lenovo\Desktop\mall-learning-demo\springboot_mybatis\src\main\java"/>
+                             targetProject="C:\Users\lenovo\Desktop\mall-learning-demo\springboot_mybatis_02\src\main\java"/>
         <!--生成全部表tableName设为%-->
         <table tableName="pms_brand">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
