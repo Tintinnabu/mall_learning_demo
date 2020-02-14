@@ -17,6 +17,7 @@ public class RedisServiceImpl implements RedisService {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
     @Override
     public void set(String key, String value) {
         stringRedisTemplate.opsForValue().set(key,value);
