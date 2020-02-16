@@ -3,6 +3,7 @@ package com.taoshi.springboot_mybatis.dao;
 
 
 import com.taoshi.springboot_mybatis.mbg.model.UmsPermission;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

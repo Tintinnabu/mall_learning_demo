@@ -39,6 +39,7 @@ import java.util.List;
      * UserDetails：SpringSecurity定义用于封装用户信息的类（主要是用户信息和权限），需要自行实现；
      * PasswordEncoder：SpringSecurity定义的用于对密码进行编码及比对的接口，目前使用的是BCryptPasswordEncoder；
      * JwtAuthenticationTokenFilter：在用户名和密码校验前添加的过滤器，如果有jwt的token，会自行根据token信息进行登录。
+    * 应用的安全性包括用户认证（Authentication）和用户授权（Authorization）两个部分
  */
 
 @Configuration
@@ -100,6 +101,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * 自定义UserDetailsService
+     * @return
+     */
     @Bean
     public UserDetailsService userDetailsService() {
         //获取登录用户信息
@@ -125,4 +130,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 }
-

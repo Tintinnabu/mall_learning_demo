@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import javax.swing.table.TableRowSorter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +32,46 @@ public class JwtTokenUtil {
     private String secret;
     @Value("${jwt.expiration}")
     private Long expiration;
+
+    /**
+     * generateToken(UserDetails userDetails) :用于根据登录用户信息生成token
+     * 根据用户信息生成token
+     */
+    public String generateToken(UserDetails userDetails){
+        Map<String,Object> claims=new HashMap<>();
+        claims.put(CLAIM_KEY_USERNAME,userDetails.getUsername());
+        claims.put(CLAIM_KEY_CREATED,new Date());
+        return generateToken(claims);
+    }
+
+    /**
+     * getUserNameFromToken(String token)：从token中获取登录用户的信息
+     * 从token中获取登录用户名
+     */
+    public String getUserNameFromToken(String token){
+        String username;
+        try {
+            Claims claims=getClaimsFromToken(token);
+            username=claims.getSubject();
+        }catch (Exception e){
+            username=null;
+        }
+        return username;
+    }
+
+    /**
+     * 验证token
+     * validateToken(String token, UserDetails userDetails)：判断token是否还有效
+     * @param token
+     * @param userDetails
+     * @return
+     */
+    public boolean validateToken(String token, UserDetails userDetails){
+        String username=getUserNameFromToken(token);
+        if (username==null)
+            return false;
+        return username.equals(userDetails.getUsername())&&!isTokenExpired(token);
+    }
 
     /**
      * 根据负责生成JWT的token
@@ -69,54 +108,12 @@ public class JwtTokenUtil {
     }
 
     /**
-     * getUserNameFromToken(String token)：从token中获取登录用户的信息
-     * 从token中获取登录用户名
-     */
-    public String getUserNameFromToken(String token){
-        String username;
-        try {
-            Claims claims=getClaimsFromToken(token);
-            username=claims.getSubject();
-        }catch (Exception e){
-            username=null;
-        }
-        return username;
-    }
-
-    /**
-     * 验证token
-     * validateToken(String token, UserDetails userDetails)：判断token是否还有效
-     * @param token
-     * @param userDetails
-     * @return
-     */
-    public boolean validateToken(String token, UserDetails userDetails){
-        String username=getUserNameFromToken(token);
-        if (username==null)
-            return false;
-        return username.equals(userDetails.getUsername())&&!isTokenExpired(token);
-    }
-
-
-    /**
      * 判断token是否已经失效
      */
     private boolean isTokenExpired(String token) {
         Date expiredDate=generateExpireDate();
         return expiredDate.before(new Date());
     }
-
-    /**
-     * generateToken(UserDetails userDetails) :用于根据登录用户信息生成token
-     * 根据用户信息生成token
-     */
-    public String generateToken(UserDetails userDetails){
-        Map<String,Object> claims=new HashMap<>();
-        claims.put(CLAIM_KEY_USERNAME,userDetails.getUsername());
-        claims.put(CLAIM_KEY_CREATED,new Date());
-        return generateToken(claims);
-    }
-
 
     /**
      * 刷新token
